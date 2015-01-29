@@ -1,0 +1,33 @@
+{
+  "name": "elm-expressway_doodle",
+  "version": "0.0.1",
+  "description": "Collaborative doodling powered by elm-expressway.",
+  "main": "index.js",
+
+  "scripts": {
+    "start": "./node_modules/.bin/gulp"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sonnym/elm-expressway_doodle.git"
+  },
+
+  "author": "Sonny Michaud <michaud.sonny@gmail.com> (https://github.com/sonnym)",
+  "license": "MIT",
+
+  "bugs": {
+    "url": "https://github.com/sonnym/elm-expressway_doodle/issues"
+  },
+
+  "homepage": "https://github.com/sonnym/elm-expressway_doodle",
+  "private": true,
+
+  "dependencies": {
+    "elm-expressway": "0.0.2"
+  },
+
+  "devDependencies": {
+    "gulp": "^3.8.10"
+  }
+}
