@@ -2,9 +2,13 @@ module Doodle.Client where
 
 import Mouse
 import Signal
-import Text
 
-main = Signal.map Text.asText receiveState
+import Graphics.Element (Element)
+
+import Doodle.View (view)
+
+main : Element
+main = view
 
 port receiveState : Signal String
 
