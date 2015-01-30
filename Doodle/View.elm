@@ -9,8 +9,20 @@ import Graphics.Element (..)
 swatchSize = 50
 palettePadding = 10
 
-view : Element
-view = flow down [palette, (spacer 0 10), canvas]
+view : (Int, Int) -> Element
+view dimensions = scaled dimensions
+
+scaled : (Int, Int) -> Element
+scaled (width,height) =
+  let
+    view = flow down [palette, (spacer 0 10), canvas]
+
+    viewWidth = toFloat ((widthOf view) + 100)
+    viewHeight = toFloat ((heightOf view) + 100)
+
+    scaleFactor = min ((toFloat width) / viewWidth) ((toFloat height) / viewHeight)
+  in
+    collage width height [view |> toForm |> scale scaleFactor]
 
 palette : Element
 palette =
