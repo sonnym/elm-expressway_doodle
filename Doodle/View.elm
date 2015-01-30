@@ -6,8 +6,8 @@ import Color (..)
 import Graphics.Collage (..)
 import Graphics.Element (..)
 
-swathSize = 25
-palettePadding = 5
+swathSize = 50
+palettePadding = 10
 
 view : Element
 view = flow down [palette, (spacer 0 10), canvas]
