@@ -10,10 +10,7 @@ swatchSize = 50
 palettePadding = 10
 
 view : (Int, Int) -> Element
-view dimensions = scaled dimensions
-
-scaled : (Int, Int) -> Element
-scaled (width,height) =
+view (width,height) =
   let
     view = flow down [palette, (spacer 0 10), canvas]
 
