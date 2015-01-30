@@ -34,7 +34,12 @@ canvas =
         |> outlined (solid black)]
 
 swath : Color -> Element
-swath c = color c (spacer swathSize swathSize)
+swath color =
+  let
+    filledSquare = filled color (square (swathSize - 1))
+    border = outlined (solid charcoal) (square swathSize)
+  in
+    collage swathSize swathSize [filledSquare, border]
 
 colors : List Color
 colors =
