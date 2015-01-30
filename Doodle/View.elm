@@ -67,7 +67,7 @@ swatch selected color =
     collage swatchSize swatchSize [filledSquare, border]
 
 colorSelection : Channel Color
-colorSelection = channel darkRed
+colorSelection = channel lightRed
 
 colors : List Color
 colors =
