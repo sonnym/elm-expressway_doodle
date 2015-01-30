@@ -5,7 +5,7 @@ import List
 import Color (..)
 import Graphics.Element (..)
 
-swathSize = 20
+swathSize = 25
 
 view : Element
 view = flow right (List.intersperse (spacer 5 swathSize) (List.map swath colors))
