@@ -2,7 +2,7 @@ module Doodle.View where
 
 import Text -- prevent compiler error (https://github.com/elm-lang/core/issues/93)
 
-import List
+import List (intersperse, map, length)
 import Signal (Channel, channel, send)
 
 import Color (..)
@@ -28,13 +28,13 @@ view (width,height) selected =
 palette : Color -> Element
 palette selected =
   flow right
-    (List.intersperse (spacer palettePadding swatchSize)
-      (List.map (swatchButton selected) colors))
+    (intersperse (spacer palettePadding swatchSize)
+      (map (swatchButton selected) colors))
 
 canvas : Element
 canvas =
   let
-    colorCount = List.length colors
+    colorCount = length colors
 
     width = ((colorCount - 1) * palettePadding) + (colorCount * swatchSize)
     height = (width * 9 // 16)
