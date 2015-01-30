@@ -1,16 +1,11 @@
 module Doodle.Client where
 
-import Mouse
-import Signal
-
 import Graphics.Element (Element)
 
-import Window
-
-import Doodle.View (view, colorSelection)
+import Doodle.Display (display)
 
 main : Signal Element
-main = Signal.map2 view Window.dimensions (Signal.subscribe colorSelection)
+main = display
 
 port receiveState : Signal String
 
