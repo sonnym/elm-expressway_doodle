@@ -3,8 +3,7 @@ module Doodle.Client where
 import Mouse
 import Signal
 
-import Graphics.Collage (collage, toForm, scale)
-import Graphics.Element (..)
+import Graphics.Element (Element)
 
 import Window
 
