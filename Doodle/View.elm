@@ -1,10 +1,14 @@
 module Doodle.View where
 
+import Text -- prevent compiler error (https://github.com/elm-lang/core/issues/93)
+
 import List
+import Signal (Channel, channel, send)
 
 import Color (..)
 import Graphics.Collage (..)
 import Graphics.Element (..)
+import Graphics.Input (customButton)
 
 swatchSize = 50
 palettePadding = 10
@@ -25,7 +29,7 @@ palette : Element
 palette =
   flow right
     (List.intersperse (spacer palettePadding swatchSize)
-      (List.map swatch colors))
+      (List.map swatchButton colors))
 
 canvas : Element
 canvas =
@@ -42,6 +46,13 @@ canvas =
       [rect floatWidth floatHeight
         |> outlined (solid black)]
 
+swatchButton : Color -> Element
+swatchButton color =
+  let
+    elem = swatch color
+  in
+    customButton (send colorSelection color) elem elem elem
+
 swatch : Color -> Element
 swatch color =
   let
@@ -49,6 +60,9 @@ swatch color =
     border = outlined (solid charcoal) (square swatchSize)
   in
     collage swatchSize swatchSize [filledSquare, border]
+
+colorSelection : Channel Color
+colorSelection = channel darkRed
 
 colors : List Color
 colors =
