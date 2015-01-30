@@ -44,10 +44,10 @@ swatch color =
 colors : List Color
 colors =
   [ lightRed, red, darkRed
-  , lightOrange, orange, darkOrange
+  , darkOrange, orange, lightOrange
   , lightYellow, yellow, darkYellow
-  , lightGreen, green, darkGreen
+  , darkGreen, green, lightGreen
   , lightBlue, blue, darkBlue
-  , lightPurple, purple, darkPurple
+  , darkPurple, purple, lightPurple
   , brown, white, black
   ]
