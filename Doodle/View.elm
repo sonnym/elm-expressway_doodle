@@ -1,17 +1,16 @@
 module Doodle.View where
 
-import Text (plainText)
+import Text (asText, plainText)
 
-import List (intersperse, map, length)
+import List (intersperse, map)
 import Signal (Channel, channel, send)
 
-import Color (..)
+import Color (Color, black, lightCharcoal, lightRed)
 import Graphics.Collage (..)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
 
-swatchSize = 50
-palettePadding = 10
+import Doodle.Model (displayWidth, canvasHeight, colors, swatchSize, palettePadding)
 
 view : (Int, Int) -> Color -> Element
 view (width,height) selected =
@@ -36,7 +35,7 @@ canvas : Element
 canvas =
   let
     width = displayWidth
-    height = (width * 9 // 16)
+    height = canvasHeight
 
     floatWidth = toFloat width
     floatHeight = toFloat height
@@ -75,23 +74,5 @@ swatch selected color =
   in
     collage swatchSize swatchSize [filledSquare, border]
 
-displayWidth : Int
-displayWidth =
-  let
-    colorCount = length colors
-  in
-    ((colorCount - 1) * palettePadding) + (colorCount * swatchSize)
-
 colorSelection : Channel Color
 colorSelection = channel lightRed
-
-colors : List Color
-colors =
-  [ lightRed, red, darkRed
-  , darkOrange, orange, lightOrange
-  , lightYellow, yellow, darkYellow
-  , darkGreen, green, lightGreen
-  , lightBlue, blue, darkBlue
-  , darkPurple, purple, lightPurple
-  , brown, white, black
-  ]
