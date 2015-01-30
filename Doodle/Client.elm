@@ -1,5 +1,7 @@
 module Doodle.Client where
 
+import Signal
+
 import Graphics.Element (Element)
 
 import Doodle.Display (display)
