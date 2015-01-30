@@ -8,10 +8,10 @@ import Graphics.Element (..)
 
 import Window
 
-import Doodle.View (view)
+import Doodle.View (view, colorSelection)
 
 main : Signal Element
-main = Signal.map view Window.dimensions
+main = Signal.map2 view Window.dimensions (Signal.subscribe colorSelection)
 
 port receiveState : Signal String
 

@@ -13,10 +13,10 @@ import Graphics.Input (customButton)
 swatchSize = 50
 palettePadding = 10
 
-view : (Int, Int) -> Element
-view (width,height) =
+view : (Int, Int) -> Color -> Element
+view (width,height) selected =
   let
-    view = flow down [palette, (spacer 0 10), canvas]
+    view = flow down [palette selected, (spacer 0 10), canvas]
 
     viewWidth = toFloat ((widthOf view) + 100)
     viewHeight = toFloat ((heightOf view) + 100)
@@ -25,11 +25,11 @@ view (width,height) =
   in
     collage width height [view |> toForm |> scale scaleFactor]
 
-palette : Element
-palette =
+palette : Color -> Element
+palette selected =
   flow right
     (List.intersperse (spacer palettePadding swatchSize)
-      (List.map swatchButton colors))
+      (List.map (swatchButton selected) colors))
 
 canvas : Element
 canvas =
@@ -46,18 +46,23 @@ canvas =
       [rect floatWidth floatHeight
         |> outlined (solid black)]
 
-swatchButton : Color -> Element
-swatchButton color =
+swatchButton : Color -> Color -> Element
+swatchButton selected color =
   let
-    elem = swatch color
+    elem = swatch selected color
   in
     customButton (send colorSelection color) elem elem elem
 
-swatch : Color -> Element
-swatch color =
+swatch : Color -> Color -> Element
+swatch selected color =
   let
-    filledSquare = filled color (square (swatchSize - 1))
-    border = outlined (solid charcoal) (square swatchSize)
+    lineWidth = if selected == color then 10 else 1
+
+    baseLineStyle = solid charcoal
+    lineStyle = { baseLineStyle | width <- lineWidth }
+
+    filledSquare = filled color (square swatchSize)
+    border = outlined lineStyle (square swatchSize)
   in
     collage swatchSize swatchSize [filledSquare, border]
 
