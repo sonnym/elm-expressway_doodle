@@ -58,7 +58,7 @@ swatch selected color =
   let
     lineWidth = if selected == color then 10 else 1
 
-    baseLineStyle = solid charcoal
+    baseLineStyle = solid lightCharcoal
     lineStyle = { baseLineStyle | width <- lineWidth }
 
     filledSquare = filled color (square swatchSize)
