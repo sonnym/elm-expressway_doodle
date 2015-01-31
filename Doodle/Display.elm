@@ -6,7 +6,8 @@ import Window
 
 import Graphics.Element (Element)
 
+import Doodle.Model (state)
 import Doodle.View (view, colorSelection)
 
 display : Signal Element
-display = Signal.map2 view Window.dimensions (Signal.subscribe colorSelection)
+display = Signal.map3 view Window.dimensions (Signal.subscribe colorSelection) state

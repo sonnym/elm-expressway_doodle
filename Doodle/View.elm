@@ -1,8 +1,9 @@
 module Doodle.View where
 
+import Array
 import Text (asText, plainText)
 
-import List (intersperse, map)
+import List ((::), intersperse, map, foldl)
 import Signal (Channel, channel, send)
 
 import Color (Color, black, lightCharcoal, lightRed)
@@ -10,13 +11,13 @@ import Graphics.Collage (..)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
 
-import Doodle.Model (displayWidth, canvasHeight, colors, swatchSize, palettePadding)
+import Doodle.Model (Grid, displayWidth, canvasHeight, colors, swatchSize, palettePadding)
 
-view : (Int, Int) -> Color -> Element
-view (width,height) selected =
+view : (Int, Int) -> Color -> Grid -> Element
+view (width,height) selected grid =
   let
     padding = spacer 0 10
-    view = flow down [palette selected, padding, canvas, padding, footer]
+    view = flow down [palette selected, padding, canvas grid, padding, footer]
 
     viewWidth = toFloat ((widthOf view) + 100)
     viewHeight = toFloat ((heightOf view) + 100)
@@ -31,18 +32,19 @@ palette selected =
     (intersperse (spacer palettePadding swatchSize)
       (map (swatchButton selected) colors))
 
-canvas : Element
-canvas =
+canvas : Grid -> Element
+canvas grid =
   let
     width = displayWidth
     height = canvasHeight
 
     floatWidth = toFloat width
     floatHeight = toFloat height
+
+    border = outlined (solid black) (rect (toFloat width) (toFloat height))
+    pixels = gridToForm grid
   in
-    collage width height
-      [rect floatWidth floatHeight
-        |> outlined (solid black)]
+    collage width height (border :: pixels)
 
 footer : Element
 footer =
@@ -73,6 +75,42 @@ swatch selected color =
     border = outlined lineStyle (square swatchSize)
   in
     collage swatchSize swatchSize [filledSquare, border]
+
+gridToForm : Grid -> List Form
+gridToForm grid =
+  let
+    lst = []
+    _ = Array.indexedMap (\x col ->
+          Array.indexedMap (\y color ->
+            (square 1
+              |> filled lightRed
+              |> move (-(toFloat displayWidth / 2) + toFloat x, (toFloat canvasHeight / 2) - toFloat y))
+            :: lst)
+          col)
+        grid
+  in lst
+  {--
+  let
+    indexed = Array.toIndexedList (Array.map Array.toIndexedList grid)
+  in
+    foldl (\indexedCol lst ->
+      let
+        x = fst indexedCol
+        col = snd indexedCol
+      in
+        foldl (\indexedCell lst ->
+          let
+            y = fst indexedCell
+            color = snd indexedCell
+
+            pixel = square 1
+              |> filled lightRed
+              |> move (-(toFloat displayWidth / 2) + toFloat x, (toFloat canvasHeight / 2) - toFloat y)
+        in
+          pixel :: lst)
+      lst col)
+    [] indexed
+  --}
 
 colorSelection : Channel Color
 colorSelection = channel lightRed

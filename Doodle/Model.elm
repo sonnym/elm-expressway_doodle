@@ -1,7 +1,17 @@
 module Doodle.Model where
 
+import Array (Array, repeat)
 import Color (..)
 import List (length)
+import Signal (Signal, constant)
+
+type alias Grid = Array (Array Color)
+
+state : Signal Grid
+state = constant initial
+
+initial : Grid
+initial = repeat displayWidth (repeat canvasHeight white)
 
 swatchSize = 50
 palettePadding = 10
