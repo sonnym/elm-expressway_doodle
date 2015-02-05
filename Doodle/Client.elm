@@ -1,5 +1,6 @@
 module Doodle.Client where
 
+import Mouse
 import Signal
 
 import Graphics.Element (Element)
