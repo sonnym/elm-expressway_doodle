@@ -34,17 +34,9 @@ palette selected =
 
 canvas : Grid -> Element
 canvas grid =
-  let
-    width = displayWidth
-    height = canvasHeight
-
-    floatWidth = toFloat width
-    floatHeight = toFloat height
-
-    border = outlined (solid black) (rect (toFloat width) (toFloat height))
-    pixels = gridToForm grid
-  in
-    collage width height (border :: pixels)
+  flow left (map (\col ->
+    flow down (map (\clr -> color clr (spacer 1 1)) (Array.toList col)))
+  (Array.toList grid))
 
 footer : Element
 footer =
@@ -75,42 +67,6 @@ swatch selected color =
     border = outlined lineStyle (square swatchSize)
   in
     collage swatchSize swatchSize [filledSquare, border]
-
-gridToForm : Grid -> List Form
-gridToForm grid =
-  let
-    lst = []
-    _ = Array.indexedMap (\x col ->
-          Array.indexedMap (\y color ->
-            (square 1
-              |> filled lightRed
-              |> move (-(toFloat displayWidth / 2) + toFloat x, (toFloat canvasHeight / 2) - toFloat y))
-            :: lst)
-          col)
-        grid
-  in lst
-  {--
-  let
-    indexed = Array.toIndexedList (Array.map Array.toIndexedList grid)
-  in
-    foldl (\indexedCol lst ->
-      let
-        x = fst indexedCol
-        col = snd indexedCol
-      in
-        foldl (\indexedCell lst ->
-          let
-            y = fst indexedCell
-            color = snd indexedCell
-
-            pixel = square 1
-              |> filled lightRed
-              |> move (-(toFloat displayWidth / 2) + toFloat x, (toFloat canvasHeight / 2) - toFloat y)
-        in
-          pixel :: lst)
-      lst col)
-    [] indexed
-  --}
 
 colorSelection : Channel Color
 colorSelection = channel lightRed
