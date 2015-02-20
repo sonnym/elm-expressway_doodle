@@ -3,7 +3,7 @@ module Doodle.View where
 import Array
 import Text (asText, plainText)
 
-import List ((::), foldr, intersperse, map, foldl)
+import List ((::), foldr, intersperse, map)
 import Signal (Channel, channel, send)
 
 import Color (Color, black, lightCharcoal, lightRed)
