@@ -14,7 +14,7 @@ import Graphics.Input (customButton)
 
 import Svg (Svg, Attribute, svg, rect)
 import Svg.Lazy (lazy)
-import Svg.Events (onClick)
+import Svg.Events (onMouseDown)
 import Svg.Attributes as SvgAttr
 
 import Html (Html, toElement)
@@ -92,4 +92,4 @@ swatch selected color =
     collage swatchSize swatchSize [filledSquare, border]
 
 clickHandler : Int -> Int -> Attribute
-clickHandler x y = onClick (send paint (x, y))
+clickHandler x y = onMouseDown (send paint (x, y))

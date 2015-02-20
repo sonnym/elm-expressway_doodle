@@ -1,13 +1,15 @@
 module Doodle.State where
 
-import Array (Array, repeat)
+import Mouse (clicks)
+
+import Array (Array, repeat, get, set)
 import Color (Color, lightBlue)
-import Signal (Signal, Channel, channel, subscribe, constant, map2, dropRepeats)
+import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats, sampleOn)
 
 import Doodle.Model (..)
 
 state : Signal Grid
-state = constant initial
+state = foldp update initial canvasUpdates
 
 initial : Grid
 initial =
@@ -15,5 +17,17 @@ initial =
     (displayWidth // pixelSize)
     (repeat (canvasHeight // pixelSize) lightBlue)
 
+update : ((Int, Int), Color) -> Grid -> Grid
+update ((x,y), color) grid =
+  let
+    columnResult = get x grid
+  in
+    case columnResult of
+      Just column -> set x (set y color column) grid
+      Nothing -> grid
+
 canvasUpdates : Signal ((Int, Int), Color)
-canvasUpdates = map2 (,) (subscribe paint) (subscribe colorSelection) |> dropRepeats
+canvasUpdates =
+  map2 (,) (subscribe paint) (subscribe colorSelection)
+    |> sampleOn clicks
+    |> dropRepeats
