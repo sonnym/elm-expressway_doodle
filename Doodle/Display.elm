@@ -1,12 +1,12 @@
 module Doodle.Display where
 
-import Mouse
 import Signal
 import Window
 
 import Graphics.Element (Element)
 
-import Doodle.Model (state, colorSelection)
+import Doodle.Model (colorSelection)
+import Doodle.State (state)
 import Doodle.View (view)
 
 display : Signal Element

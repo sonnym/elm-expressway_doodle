@@ -1,20 +1,11 @@
 module Doodle.Model where
 
-import Array (Array, repeat)
+import Array (Array)
 import Color (..)
 import List (length)
-import Signal (Signal, Channel, channel, subscribe, constant, map2, dropRepeats)
+import Signal (Channel, channel)
 
 type alias Grid = Array (Array Color)
-
-state : Signal Grid
-state = constant initial
-
-initial : Grid
-initial =
-  repeat
-    (displayWidth // pixelSize)
-    (repeat (canvasHeight // pixelSize) lightBlue)
 
 swatchSize = 50
 palettePadding = 10
