@@ -1,7 +1,5 @@
 module Doodle.State where
 
-import Mouse (clicks)
-
 import Array (Array, repeat, get, set)
 import Color (Color, lightBlue)
 import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats, sampleOn)
@@ -29,5 +27,5 @@ update ((x,y), color) grid =
 canvasUpdates : Signal ((Int, Int), Color)
 canvasUpdates =
   map2 (,) (subscribe paint) (subscribe colorSelection)
-    |> sampleOn clicks
+    |> sampleOn (subscribe paint)
     |> dropRepeats
