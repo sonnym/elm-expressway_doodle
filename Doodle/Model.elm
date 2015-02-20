@@ -59,5 +59,8 @@ colorString color =
 colorSelection : Channel Color
 colorSelection = channel lightRed
 
+mouseDown : Channel Bool
+mouseDown = channel False
+
 paint : Channel (Int, Int)
 paint = channel (-1, -1)

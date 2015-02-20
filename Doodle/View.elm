@@ -14,7 +14,7 @@ import Graphics.Input (customButton)
 
 import Svg (Svg, Attribute, svg, rect)
 import Svg.Lazy (lazy)
-import Svg.Events (onMouseOver)
+import Svg.Events (onMouseDown, onMouseUp, onMouseOver)
 import Svg.Attributes as SvgAttr
 
 import Html (Html, toElement)
@@ -56,7 +56,9 @@ polygons grid =
             , SvgAttr.y (toString (y * pixelSize))
             , SvgAttr.width (toString pixelSize)
             , SvgAttr.height (toString pixelSize)
-            , clickHandler x y
+            , onMouseDown (send mouseDown True)
+            , onMouseUp (send mouseDown False)
+            , mouseOverHandler x y
             ] []) :: lst)
       lst column))
     [] (Array.toIndexedList (Array.map Array.toIndexedList grid))

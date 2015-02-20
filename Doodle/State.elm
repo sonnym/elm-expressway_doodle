@@ -2,7 +2,7 @@ module Doodle.State where
 
 import Array (Array, repeat, get, set)
 import Color (Color, lightBlue)
-import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats)
+import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats, keepWhen)
 
 import Doodle.Model (..)
 
@@ -27,4 +27,5 @@ update ((x,y), color) grid =
 canvasUpdates : Signal ((Int, Int), Color)
 canvasUpdates =
   map2 (,) (subscribe paint) (subscribe colorSelection)
+    |> keepWhen (subscribe mouseDown) ((-1, -1), lightBlue)
     |> dropRepeats
