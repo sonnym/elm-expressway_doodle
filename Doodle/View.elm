@@ -25,7 +25,9 @@ view (width,height) selected grid =
   let
     padding = spacer 0 10
   in
-    flow down [palette selected, padding, canvas grid, padding, footer]
+    container
+      width height middle
+      (flow down [palette selected, padding, canvas grid, padding, footer])
 
 palette : Color -> Element
 palette selected =
