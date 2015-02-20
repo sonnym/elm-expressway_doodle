@@ -5,15 +5,16 @@ import String (join)
 import Text (asText, plainText)
 
 import List ((::), foldr, intersperse, map)
-import Signal (Channel, channel, send)
+import Signal (send)
 
 import Color (Color, lightCharcoal, lightRed)
 import Graphics.Collage (collage, solid, filled, square, outlined)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
 
-import Svg (Svg, svg, rect)
+import Svg (Svg, Attribute, svg, rect)
 import Svg.Lazy (lazy)
+import Svg.Events (onClick)
 import Svg.Attributes as SvgAttr
 
 import Html (Html, toElement)
@@ -55,6 +56,7 @@ polygons grid =
             , SvgAttr.y (toString (y * pixelSize))
             , SvgAttr.width (toString pixelSize)
             , SvgAttr.height (toString pixelSize)
+            , clickHandler x y
             ] []) :: lst)
       lst column))
     [] (Array.toIndexedList (Array.map Array.toIndexedList grid))
@@ -89,5 +91,5 @@ swatch selected color =
   in
     collage swatchSize swatchSize [filledSquare, border]
 
-colorSelection : Channel Color
-colorSelection = channel lightRed
+clickHandler : Int -> Int -> Attribute
+clickHandler x y = onClick (send paint (x, y))

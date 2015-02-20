@@ -3,7 +3,7 @@ module Doodle.Model where
 import Array (Array, repeat)
 import Color (..)
 import List (length)
-import Signal (Signal, constant)
+import Signal (Signal, Channel, channel, subscribe, constant, map2, dropRepeats)
 
 type alias Grid = Array (Array Color)
 
@@ -64,3 +64,9 @@ colorString color =
      | color == brown -> "#c17d11"
      | color == white -> "#ffffff"
      | color == black -> "#000000"
+
+colorSelection : Channel Color
+colorSelection = channel lightRed
+
+paint : Channel (Int, Int)
+paint = channel (-1, -1)
