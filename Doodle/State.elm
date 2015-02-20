@@ -6,8 +6,8 @@ import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats, ke
 
 import Doodle.Model (..)
 
-state : Signal Grid
-state = foldp update initial canvasUpdates
+state : Signal ((Int, Int), Color) -> Signal Grid
+state source = foldp update initial source
 
 initial : Grid
 initial =
