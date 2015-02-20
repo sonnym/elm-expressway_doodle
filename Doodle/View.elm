@@ -3,21 +3,27 @@ module Doodle.View where
 import Array
 import Text (asText, plainText)
 
-import List ((::), intersperse, map, foldl)
+import List ((::), foldr, intersperse, map, foldl)
 import Signal (Channel, channel, send)
 
 import Color (Color, black, lightCharcoal, lightRed)
-import Graphics.Collage (..)
+import Graphics.Collage (collage, solid, filled, scale, square, outlined, toForm)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
+
+import Svg (Svg, svg, rect)
+import Svg.Lazy (lazy)
+import Svg.Attributes as SvgAttr
+
+import Html (Html, toElement)
 
 import Doodle.Model (Grid, displayWidth, canvasHeight, colors, swatchSize, palettePadding)
 
 view : (Int, Int) -> Color -> Grid -> Element
-view (width,height) selected grid =
+view ((width,height) as dims) selected grid =
   let
     padding = spacer 0 10
-    view = flow down [palette selected, padding, canvas grid, padding, footer]
+    view = flow down [palette selected, padding, canvas dims grid, padding, footer]
 
     viewWidth = toFloat ((widthOf view) + 100)
     viewHeight = toFloat ((heightOf view) + 100)
@@ -32,11 +38,29 @@ palette selected =
     (intersperse (spacer palettePadding swatchSize)
       (map (swatchButton selected) colors))
 
-canvas : Grid -> Element
-canvas grid =
-  flow left (map (\col ->
-    flow down (map (\clr -> color clr (spacer 1 1)) (Array.toList col)))
-  (Array.toList grid))
+canvas : (Int,Int) -> Grid -> Element
+canvas (width,height) grid =
+  toElement width height
+    ((svg >> lazy)
+      [ SvgAttr.version "1.1"
+      , SvgAttr.x "0"
+      , SvgAttr.y "0"
+      , SvgAttr.viewBox "0 0 720 480"
+      ]
+      (polygons grid))
+
+polygons : Grid -> List Svg
+polygons grid =
+  foldr (\(x,column) lst ->
+    (foldr (\(y,color) lst ->
+      ((rect >> lazy) [ SvgAttr.fill "#000000"
+            , SvgAttr.x (toString x)
+            , SvgAttr.y (toString y)
+            , SvgAttr.width "2"
+            , SvgAttr.height "2"
+            ] []) :: lst)
+      lst column))
+    [] (Array.toIndexedList (Array.map Array.toIndexedList grid))
 
 footer : Element
 footer =
