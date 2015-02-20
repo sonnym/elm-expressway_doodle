@@ -1,6 +1,7 @@
 module Doodle.View where
 
 import Array
+import String (join)
 import Text (asText, plainText)
 
 import List ((::), foldr, intersperse, map)
@@ -20,10 +21,10 @@ import Html (Html, toElement)
 import Doodle.Model (..)
 
 view : (Int, Int) -> Color -> Grid -> Element
-view ((width,height) as dims) selected grid =
+view (width,height) selected grid =
   let
     padding = spacer 0 10
-    view = flow down [palette selected, padding, canvas dims grid, padding, footer]
+    view = flow down [palette selected, padding, canvas grid, padding, footer]
 
     viewWidth = toFloat ((widthOf view) + 100)
     viewHeight = toFloat ((heightOf view) + 100)
@@ -38,14 +39,14 @@ palette selected =
     (intersperse (spacer palettePadding swatchSize)
       (map (swatchButton selected) colors))
 
-canvas : (Int,Int) -> Grid -> Element
-canvas (width,height) grid =
-  toElement width height
+canvas : Grid -> Element
+canvas grid =
+  toElement displayWidth canvasHeight
     ((svg >> lazy)
       [ SvgAttr.version "1.1"
       , SvgAttr.x "0"
       , SvgAttr.y "0"
-      , SvgAttr.viewBox "0 0 720 480"
+      , SvgAttr.viewBox (join " " ["0", "0", toString displayWidth, toString canvasHeight])
       ]
       (polygons grid))
 
