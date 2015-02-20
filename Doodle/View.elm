@@ -17,7 +17,7 @@ import Svg.Attributes as SvgAttr
 
 import Html (Html, toElement)
 
-import Doodle.Model (Grid, displayWidth, canvasHeight, colors, swatchSize, palettePadding)
+import Doodle.Model (..)
 
 view : (Int, Int) -> Color -> Grid -> Element
 view ((width,height) as dims) selected grid =
