@@ -24,14 +24,8 @@ view : (Int, Int) -> Color -> Grid -> Element
 view (width,height) selected grid =
   let
     padding = spacer 0 10
-    view = flow down [palette selected, padding, canvas grid, padding, footer]
-
-    viewWidth = toFloat ((widthOf view) + 100)
-    viewHeight = toFloat ((heightOf view) + 100)
-
-    scaleFactor = min ((toFloat width) / viewWidth) ((toFloat height) / viewHeight)
   in
-    collage width height [view |> toForm |> scale scaleFactor]
+    flow down [palette selected, padding, canvas grid, padding, footer]
 
 palette : Color -> Element
 palette selected =
