@@ -56,8 +56,8 @@ polygons grid =
       ((rect >> lazy) [ SvgAttr.fill "#000000"
             , SvgAttr.x (toString x)
             , SvgAttr.y (toString y)
-            , SvgAttr.width "2"
-            , SvgAttr.height "2"
+            , SvgAttr.width (toString pixelSize)
+            , SvgAttr.height (toString pixelSize)
             ] []) :: lst)
       lst column))
     [] (Array.toIndexedList (Array.map Array.toIndexedList grid))

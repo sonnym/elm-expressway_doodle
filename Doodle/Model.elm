@@ -11,10 +11,14 @@ state : Signal Grid
 state = constant initial
 
 initial : Grid
-initial = repeat displayWidth (repeat canvasHeight white)
+initial =
+  repeat
+    (displayWidth // pixelSize)
+    (repeat (canvasHeight // pixelSize) white)
 
 swatchSize = 50
 palettePadding = 10
+pixelSize = 2
 
 displayWidth : Int
 displayWidth =
