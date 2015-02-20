@@ -14,7 +14,7 @@ initial : Grid
 initial =
   repeat
     (displayWidth // pixelSize)
-    (repeat (canvasHeight // pixelSize) white)
+    (repeat (canvasHeight // pixelSize) lightBlue)
 
 swatchSize = 50
 palettePadding = 10
