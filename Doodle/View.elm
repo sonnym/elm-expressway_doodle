@@ -7,8 +7,8 @@ import Text (asText, plainText)
 import List ((::), foldr, intersperse, map)
 import Signal (Channel, channel, send)
 
-import Color (Color, black, lightCharcoal, lightRed)
-import Graphics.Collage (collage, solid, filled, scale, square, outlined, toForm)
+import Color (Color, lightCharcoal, lightRed)
+import Graphics.Collage (collage, solid, filled, square, outlined)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
 
