@@ -7,9 +7,9 @@ import Signal (Channel, channel)
 
 type alias Grid = Array (Array Color)
 
-swatchSize = 25
-palettePadding = 5
-pixelSize = 10
+swatchSize = 32
+palettePadding = 4
+pixelSize = 4
 
 displayWidth : Int
 displayWidth =
