@@ -50,7 +50,7 @@ polygons : Grid -> List Svg
 polygons grid =
   foldr (\(x,column) lst ->
     (foldr (\(y,color) lst ->
-      ((rect >> lazy) [ SvgAttr.fill "#000000"
+      ((rect >> lazy) [ SvgAttr.fill (colorString color)
             , SvgAttr.x (toString (x * pixelSize))
             , SvgAttr.y (toString (y * pixelSize))
             , SvgAttr.width (toString pixelSize)
