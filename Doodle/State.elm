@@ -6,7 +6,7 @@ import Signal (Signal, Channel, channel, subscribe, foldp, map2, dropRepeats, ke
 
 import Doodle.Model (..)
 
-state : Signal ((Int, Int), Color) -> Signal Grid
+state : Signal Update -> Signal Grid
 state source = foldp update initial source
 
 initial : Grid
@@ -24,7 +24,7 @@ update ((x,y), color) grid =
       Just column -> set x (set y color column) grid
       Nothing -> grid
 
-canvasUpdates : Signal ((Int, Int), Color)
+canvasUpdates : Signal Update
 canvasUpdates =
   map2 (,) (subscribe paint) (subscribe colorSelection)
     |> keepWhen (subscribe mouseDown) ((-1, -1), lightBlue)
