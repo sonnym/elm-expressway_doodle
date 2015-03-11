@@ -16,7 +16,7 @@
 
     socket.onopen = function() {
       doodleClient = Elm.fullscreen(Elm.Doodle.Client, {
-        receiveState: "0"
+        receiveState: [[]]
       });
 
       doodleClient.ports.sendInput.subscribe(function(input) {
