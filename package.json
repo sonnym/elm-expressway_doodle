@@ -24,7 +24,7 @@
   "private": true,
 
   "dependencies": {
-    "elm-expressway": "0.0.2"
+    "elm-expressway": "sonnym/elm-expressway"
   },
 
   "devDependencies": {
