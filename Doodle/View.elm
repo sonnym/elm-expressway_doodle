@@ -7,7 +7,7 @@ import Text (asText, plainText)
 import List ((::), foldr, intersperse, map)
 import Signal (send)
 
-import Color (Color, lightCharcoal, lightRed)
+import Color (Color, rgb, lightCharcoal, lightRed)
 import Graphics.Collage (collage, solid, filled, square, outlined)
 import Graphics.Element (..)
 import Graphics.Input (customButton)
@@ -21,14 +21,15 @@ import Html (Html, toElement)
 
 import Doodle.Model (..)
 
-view : (Int, Int) -> Color -> Grid -> Element
-view (width,height) selected grid =
+view : (Int, Int) -> (Int, Int, Int) -> Grid -> Element
+view (width,height) (r,g,b) grid =
   let
     padding = spacer 0 10
+    selectedColor = rgb r g b
   in
     container
       width height middle
-      (flow down [palette selected, padding, canvas grid, padding, footer])
+      (flow down [palette selectedColor, padding, canvas grid, padding, footer])
 
 palette : Color -> Element
 palette selected =
@@ -50,8 +51,8 @@ canvas grid =
 polygons : Grid -> List Svg
 polygons grid =
   foldr (\(x,column) lst ->
-    (foldr (\(y,color) lst ->
-      ((rect >> lazy) [ SvgAttr.fill (colorString color)
+    (foldr (\(y,(r,g,b)) lst ->
+      ((rect >> lazy) [ SvgAttr.fill (colorString (rgb r g b))
             , SvgAttr.x (toString (x * pixelSize))
             , SvgAttr.y (toString (y * pixelSize))
             , SvgAttr.width (toString pixelSize)

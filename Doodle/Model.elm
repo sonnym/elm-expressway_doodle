@@ -5,8 +5,8 @@ import Color (..)
 import List (length)
 import Signal (Channel, channel)
 
-type alias Grid = Array (Array Color)
-type alias Update = ((Int, Int), Color)
+type alias Grid = Array (Array (Int, Int, Int))
+type alias Update = ((Int, Int), (Int, Int, Int))
 
 swatchSize = 32
 palettePadding = 4
